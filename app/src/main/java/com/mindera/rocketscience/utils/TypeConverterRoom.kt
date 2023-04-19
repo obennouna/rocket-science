@@ -3,10 +3,7 @@ package com.mindera.rocketscience.utils
 import androidx.room.TypeConverter
 import com.mindera.rocketscience.model.companyinfo.Headquarters
 import com.mindera.rocketscience.model.companyinfo.Links
-import com.mindera.rocketscience.model.launches.Launch
-import com.mindera.rocketscience.model.launches.Launch.Core
-import com.mindera.rocketscience.model.launches.Launch.Failure
-import com.mindera.rocketscience.model.launches.Launch.Links.*
+import com.mindera.rocketscience.model.launches.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 
@@ -65,13 +62,13 @@ class TypeConverterRoom {
     }
 
     @TypeConverter
-    fun fromStringToLinksLaunch(value: String): Launch.Links? {
-        return moshi.adapter(Launch.Links::class.java).fromJson(value)
+    fun fromStringToLinksLaunch(value: String): LaunchLinks? {
+        return moshi.adapter(LaunchLinks::class.java).fromJson(value)
     }
 
     @TypeConverter
-    fun fromLinksLaunchToString(value: Launch.Links): String {
-        return moshi.adapter(Launch.Links::class.java).toJson(value)
+    fun fromLinksLaunchToString(value: LaunchLinks): String {
+        return moshi.adapter(LaunchLinks::class.java).toJson(value)
     }
 
     @TypeConverter
@@ -95,13 +92,13 @@ class TypeConverterRoom {
     }
 
     @TypeConverter
-    fun fromStringToFairings(value: String): Launch.Fairings? {
-        return moshi.adapter(Launch.Fairings::class.java).fromJson(value)
+    fun fromStringToFairings(value: String): Fairings? {
+        return moshi.adapter(Fairings::class.java).fromJson(value)
     }
 
     @TypeConverter
-    fun fromFairingsToString(value: Launch.Fairings): String {
-        return moshi.adapter(Launch.Fairings::class.java).toJson(value)
+    fun fromFairingsToString(value: Fairings?): String {
+        return moshi.adapter(Fairings::class.java).toJson(value)
     }
 
     @TypeConverter

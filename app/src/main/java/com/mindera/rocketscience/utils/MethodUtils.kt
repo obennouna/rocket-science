@@ -6,6 +6,8 @@ import android.net.NetworkCapabilities
 import android.text.format.DateFormat
 import android.util.Log
 import com.mindera.rocketscience.R
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
@@ -33,17 +35,14 @@ class MethodUtils {
             return false
         }
 
-        fun getDate(time: Long?): String {
+        fun getDate(time: Int): String {
             val cal: Calendar = Calendar.getInstance(Locale.ENGLISH)
-            if (time != null) {
-                cal.timeInMillis = time * 1000
-                return DateFormat.format("dd-MM-yyyy", cal)
-                    .toString() + " at " + DateFormat.format("HH:mm", cal).toString()
-            }
-            return "Error"
+            cal.timeInMillis = ((time * 1000).toLong())
+            return DateFormat.format("dd-MM-yyyy", cal)
+                .toString() + " at " + DateFormat.format("HH:mm", cal).toString()
         }
 
-        fun formatDateDifference(context: Context, time: Long?): String {
+        fun formatDateDifference(context: Context, time: Int): String {
             val today = LocalDate.now()
             val from = LocalDate.parse(time.toString(), DateTimeFormatter.BASIC_ISO_DATE)
             val period = Period.between(from, today)
@@ -52,6 +51,12 @@ class MethodUtils {
             } else {
                 context.getString(R.string.launch_mission_date_since, period.days)
             }
+        }
+
+        fun buildClient(): OkHttpClient {
+            val httpLoggingInterceptor = HttpLoggingInterceptor()
+            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            return OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build()
         }
     }
 }

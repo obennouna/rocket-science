@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 
 class RocketScienceViewModel : ViewModel() {
     private val rocketScienceRepository = RocketScienceRepository()
+
     private val _companyInfo: MutableLiveData<CompanyInfo> = MutableLiveData()
     private val _launches: MutableLiveData<List<Launch>> = MutableLiveData()
 
@@ -35,9 +36,7 @@ class RocketScienceViewModel : ViewModel() {
     fun getLaunches(context: Context) {
         _launches.apply {
             viewModelScope.launch(Dispatchers.Main) {
-                rocketScienceRepository.getLaunches(context).collect {
-                    value = it
-                }
+                value = context.let { rocketScienceRepository.getLaunches(it) }
             }
         }
     }

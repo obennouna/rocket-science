@@ -30,12 +30,11 @@ class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
             updateLaunches(it)
         }
         setContentView(binding.root)
-        rocketScienceViewModel.getCompanyInfo(baseContext)
+        rocketScienceViewModel.getMainData(baseContext)
     }
 
     private fun updateCompanyInfo(companyInfo: CompanyInfo?) {
         if (companyInfo != null) {
-            rocketScienceViewModel.getLaunches(baseContext)
             binding.companyInfoContent.text = getString(
                 R.string.main_activity_content_company_info,
                 companyInfo.name,
@@ -48,14 +47,21 @@ class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
         }
     }
 
-    private fun updateLaunches(launches: List<Launch>?) {
-        binding.launchsItems.setHasFixedSize(true)
-        binding.launchsItems.layoutManager = LinearLayoutManager(baseContext)
-        binding.launchsItems.itemAnimator = DefaultItemAnimator()
-        binding.launchsItems.addItemDecoration(DividerItemDecoration(baseContext, DividerItemDecoration.VERTICAL))
-        launchesAdapter.onItemClickListener(this)
-        launches?.let { launchesAdapter.setData(it) }
-        binding.launchsItems.adapter = launchesAdapter
+    private fun updateLaunches(launches: List<Launch>) {
+        if (launches.isNotEmpty()) {
+            binding.launchsItems.setHasFixedSize(true)
+            binding.launchsItems.layoutManager = LinearLayoutManager(baseContext)
+            binding.launchsItems.itemAnimator = DefaultItemAnimator()
+            binding.launchsItems.addItemDecoration(
+                DividerItemDecoration(
+                    baseContext,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+            launchesAdapter.onItemClickListener(this)
+            launchesAdapter.setData(launches)
+            binding.launchsItems.adapter = launchesAdapter
+        }
     }
 
     override fun onItemClickListener(data: Launch) {

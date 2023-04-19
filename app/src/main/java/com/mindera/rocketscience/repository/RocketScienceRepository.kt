@@ -3,6 +3,7 @@ package com.mindera.rocketscience.repository
 import android.content.Context
 import com.mindera.rocketscience.database.AppDatabase
 import com.mindera.rocketscience.model.companyinfo.CompanyInfo
+import com.mindera.rocketscience.model.launches.Launch
 import com.mindera.rocketscience.network.RocketScienceClient
 import com.mindera.rocketscience.utils.MethodUtils
 import kotlinx.coroutines.flow.flow
@@ -37,12 +38,12 @@ class RocketScienceRepository {
     /**
      * We use the power of Flows to optimize the response time and not wait for ALL launches to load to display the list
      */
-    suspend fun getLaunches(context: Context) = flow {
+    suspend fun getLaunches(context: Context) : List<Launch> {
         val launchDao = AppDatabase.getInstance(context).launchDao()
         if (!MethodUtils.isOnline(context)) {
             val result = launchDao.getAll()
             if (result != null) {
-                emit(result)
+                return result
             }
         }
 
@@ -51,11 +52,11 @@ class RocketScienceRepository {
             if (response.isSuccessful && response.body() != null) {
                 val data = response.body()!!
                 launchDao.insert(data)
-                emit(data)
+                return data
             }
         } catch (e: Exception) {
-            emit(null)
+            return emptyList()
         }
-        emit(null)
+        return emptyList()
     }
 }

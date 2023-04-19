@@ -42,9 +42,9 @@ class LaunchesAdapter : RecyclerView.Adapter<LaunchesAdapter.ViewHolder>() {
         fun bind(data: Launch) {
             this.data = data
             binding.findViewById<TextView>(R.id.launch_mission_title).text = data.name
-            binding.findViewById<TextView>(R.id.launch_mission_date_content).text = MethodUtils.getDate(data.dateUnix)
+            binding.findViewById<TextView>(R.id.launch_mission_date_content).text = MethodUtils.getDate(data.date_unix)
             binding.findViewById<TextView>(R.id.launch_mission_rocket_content).text = data.rocket
-            binding.findViewById<TextView>(R.id.launch_mission_days_content).text = MethodUtils.formatDateDifference(binding.context, data.dateUnix)
+            binding.findViewById<TextView>(R.id.launch_mission_days_content).text = MethodUtils.formatDateDifference(binding.context, data.date_unix)
         }
 
         override fun onClick(v: View?) {
