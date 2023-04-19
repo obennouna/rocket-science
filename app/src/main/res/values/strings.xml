@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Rocket Science</string>
+
+    <!-- Company Info -->
+    <string name="main_activity_title_company_info">Company Info</string>
+    <string name="main_activity_content_company_info">%s was founded by %s in %d. It has now %d employees, %d launch sites, and is valued USD %d</string>
+
+    <!-- Launchs -->
+    <string name="launch_mission_date">%s at %s</string>
+    <string name="launch_mission_rocket">%s / %s</string>
+    <string name="launch_mission_date_today">Today</string>
+    <string name="launch_mission_date_since">Since %d now</string>
+    <string name="launch_mission_date_from">From %d now</string>
+</resources>
