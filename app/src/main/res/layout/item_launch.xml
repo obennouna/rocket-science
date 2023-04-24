@@ -80,4 +80,12 @@
         app:layout_constraintStart_toEndOf="@id/launch_mission_days_label"
         app:layout_constraintTop_toBottomOf="@id/launch_mission_rocket_content" />
 
+    <ImageView
+        android:id="@+id/launch_mission_success"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

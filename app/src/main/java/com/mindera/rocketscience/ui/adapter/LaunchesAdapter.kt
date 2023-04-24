@@ -68,6 +68,11 @@ class LaunchesAdapter : RecyclerView.Adapter<LaunchesAdapter.ViewHolder>() {
                 binding.findViewById<ImageView>(R.id.launch_mission_image)
                     .load(data.links.patch.small)
             }
+            if (data.success == true) {
+                binding.findViewById<ImageView>(R.id.launch_mission_success).setImageResource(R.drawable.baseline_check_24)
+            } else {
+                binding.findViewById<ImageView>(R.id.launch_mission_success).setImageResource(R.drawable.baseline_close_24)
+            }
         }
 
         override fun onClick(v: View?) {
