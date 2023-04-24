@@ -21,7 +21,7 @@ data class Launch(
     val id: String,
     val launch_library_id: String?,
     val launchpad: String,
-    val launchLinks: LaunchLinks,
+    val links: LaunchLinks,
     val name: String,
     val net: Boolean,
     val payloads: List<String>,

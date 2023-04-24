@@ -1,12 +1,13 @@
 package com.mindera.rocketscience.repository
 
 import android.content.Context
+import android.util.Log
 import com.mindera.rocketscience.database.AppDatabase
 import com.mindera.rocketscience.model.companyinfo.CompanyInfo
 import com.mindera.rocketscience.model.launches.Launch
+import com.mindera.rocketscience.model.rocket.Rocket
 import com.mindera.rocketscience.network.RocketScienceClient
 import com.mindera.rocketscience.utils.MethodUtils
-import kotlinx.coroutines.flow.flow
 
 class RocketScienceRepository {
 
@@ -35,9 +36,6 @@ class RocketScienceRepository {
         return null
     }
 
-    /**
-     * We use the power of Flows to optimize the response time and not wait for ALL launches to load to display the list
-     */
     suspend fun getLaunches(context: Context) : List<Launch> {
         val launchDao = AppDatabase.getInstance(context).launchDao()
         if (!MethodUtils.isOnline(context)) {
@@ -55,6 +53,30 @@ class RocketScienceRepository {
                 return data
             }
         } catch (e: Exception) {
+            Log.e(RocketScienceRepository::class.simpleName, e.message.toString())
+            return emptyList()
+        }
+        return emptyList()
+    }
+
+    suspend fun getRockets(context: Context) : List<Rocket> {
+        val rocketDao = AppDatabase.getInstance(context).rocketDao()
+        if (!MethodUtils.isOnline(context)) {
+            val result = rocketDao.getAll()
+            if (result != null) {
+                return result
+            }
+        }
+
+        try {
+            val response = RocketScienceClient.apiClient.getRockets()
+            if (response.isSuccessful && response.body() != null) {
+                val data = response.body()!!
+                rocketDao.insert(data)
+                return data
+            }
+        } catch (e: Exception) {
+            Log.e(RocketScienceRepository::class.simpleName, e.message.toString())
             return emptyList()
         }
         return emptyList()

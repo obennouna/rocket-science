@@ -10,6 +10,7 @@ import com.mindera.rocketscience.R
 import com.mindera.rocketscience.databinding.ActivityMainBinding
 import com.mindera.rocketscience.model.companyinfo.CompanyInfo
 import com.mindera.rocketscience.model.launches.Launch
+import com.mindera.rocketscience.model.rocket.Rocket
 import com.mindera.rocketscience.ui.adapter.LaunchesAdapter
 import com.mindera.rocketscience.ui.viewmodel.RocketScienceViewModel
 
@@ -28,6 +29,9 @@ class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
         }
         rocketScienceViewModel.launchesLiveData.observe(this) {
             updateLaunches(it)
+        }
+        rocketScienceViewModel.rocketsLiveData.observe(this) {
+            updateRockets(it)
         }
         setContentView(binding.root)
         rocketScienceViewModel.getMainData(baseContext)
@@ -49,10 +53,10 @@ class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
 
     private fun updateLaunches(launches: List<Launch>) {
         if (launches.isNotEmpty()) {
-            binding.launchsItems.setHasFixedSize(true)
-            binding.launchsItems.layoutManager = LinearLayoutManager(baseContext)
-            binding.launchsItems.itemAnimator = DefaultItemAnimator()
-            binding.launchsItems.addItemDecoration(
+            binding.launchesItems.setHasFixedSize(true)
+            binding.launchesItems.layoutManager = LinearLayoutManager(baseContext)
+            binding.launchesItems.itemAnimator = DefaultItemAnimator()
+            binding.launchesItems.addItemDecoration(
                 DividerItemDecoration(
                     baseContext,
                     DividerItemDecoration.VERTICAL
@@ -60,8 +64,11 @@ class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
             )
             launchesAdapter.onItemClickListener(this)
             launchesAdapter.setData(launches)
-            binding.launchsItems.adapter = launchesAdapter
+            binding.launchesItems.adapter = launchesAdapter
         }
+    }
+
+    private fun updateRockets(rockets: List<Rocket>?) {
     }
 
     override fun onItemClickListener(data: Launch) {

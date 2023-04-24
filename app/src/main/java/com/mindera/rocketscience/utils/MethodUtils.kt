@@ -3,14 +3,15 @@ package com.mindera.rocketscience.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.text.format.DateFormat
 import android.util.Log
 import com.mindera.rocketscience.R
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import java.text.SimpleDateFormat
+import java.time.Instant
 import java.time.LocalDate
 import java.time.Period
-import java.time.format.DateTimeFormatter
+import java.time.ZoneOffset
 import java.util.*
 
 class MethodUtils {
@@ -36,20 +37,30 @@ class MethodUtils {
         }
 
         fun getDate(time: Int): String {
-            val cal: Calendar = Calendar.getInstance(Locale.ENGLISH)
-            cal.timeInMillis = ((time * 1000).toLong())
-            return DateFormat.format("dd-MM-yyyy", cal)
-                .toString() + " at " + DateFormat.format("HH:mm", cal).toString()
+            val date = Date(time.toLong() * 1000)
+            val format = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH)
+            return format.format(date)
+        }
+
+        fun formatDateSinceOrFrom(context: Context, time: Int): String {
+            val today = LocalDate.now()
+            val from = Instant.ofEpochMilli(time.toLong()).atOffset(ZoneOffset.UTC).toLocalDate()
+            return if (today.isBefore(from)) {
+                context.getString(R.string.launch_mission_date_label, context.getString(R.string.launch_mission_from_label))
+            } else {
+                context.getString(R.string.launch_mission_date_label, context.getString(R.string.launch_mission_since_label))
+            }
         }
 
         fun formatDateDifference(context: Context, time: Int): String {
             val today = LocalDate.now()
-            val from = LocalDate.parse(time.toString(), DateTimeFormatter.BASIC_ISO_DATE)
+            val from = Instant.ofEpochMilli(time.toLong() * 1000).atOffset(ZoneOffset.UTC).toLocalDate()
             val period = Period.between(from, today)
-            return if (today.isBefore(from)) {
-                context.getString(R.string.launch_mission_date_from, period.days)
+            val days = period.days + (period.years * 365)
+            return if (today.isEqual(from)) {
+                context.getString(R.string.launch_mission_today_label)
             } else {
-                context.getString(R.string.launch_mission_date_since, period.days)
+                context.getString(R.string.launch_mission_date_days, days)
             }
         }
 
