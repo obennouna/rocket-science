@@ -3,6 +3,9 @@ package com.mindera.rocketscience.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -16,11 +19,14 @@ import com.mindera.rocketscience.model.launches.Launch
 import com.mindera.rocketscience.model.rocket.Rocket
 import com.mindera.rocketscience.ui.adapter.LaunchesAdapter
 import com.mindera.rocketscience.ui.viewmodel.RocketScienceViewModel
+import com.mindera.rocketscience.utils.MethodUtils
 import okhttp3.internal.notifyAll
 
 
-class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener,
+    FilterDialogFragment.NoticeDialogListener {
 
+    private lateinit var launches: List<Launch>
     private lateinit var rocketScienceViewModel: RocketScienceViewModel
     private lateinit var binding: ActivityMainBinding
     private val launchesAdapter = LaunchesAdapter()
@@ -33,6 +39,7 @@ class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
             updateCompanyInfo(it)
         }
         rocketScienceViewModel.launchesLiveData.observe(this) {
+            this.launches = it
             updateLaunches(it)
         }
         rocketScienceViewModel.rocketsLiveData.observe(this) {
@@ -40,6 +47,27 @@ class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
         }
         setContentView(binding.root)
         rocketScienceViewModel.getMainData(baseContext)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_main_activity, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.filter_list -> {
+                displayDialogFilter()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun displayDialogFilter() {
+        val dialogFragment = FilterDialogFragment.generateFilterDialogFragment(ArrayList(launches))
+        dialogFragment.show(supportFragmentManager, localClassName)
     }
 
     private fun updateCompanyInfo(companyInfo: CompanyInfo?) {
@@ -102,5 +130,34 @@ class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
     private fun openIntent(uri: String?) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
         startActivity(browserIntent)
+    }
+
+    override fun onDialogPositiveClick(
+        dialog: List<String>,
+        launchesSuccess: List<Boolean>,
+        listAsc: Boolean
+    ) {
+        val filterSuccess = mutableListOf<Boolean>()
+        if (launchesSuccess[0]) {
+            filterSuccess.add(true)
+        }
+        if (launchesSuccess[1]) {
+            filterSuccess.add(false)
+        }
+        var launchesFiltered = emptyList<Launch>()
+        if (dialog.isNotEmpty()) {
+            launchesFiltered = launches.filter {
+                dialog.contains(MethodUtils.getYear(it.date_unix))
+            }
+        }
+        if (filterSuccess.isNotEmpty()) {
+            launchesFiltered = launches.filter {
+                filterSuccess.contains(it.success)
+            }
+        }
+        if (!listAsc) {
+            launchesFiltered = launches.sortedBy { 1 - it.date_unix }
+        }
+        updateLaunches(launchesFiltered)
     }
 }

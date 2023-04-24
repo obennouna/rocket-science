@@ -1,5 +1,9 @@
 package com.mindera.rocketscience.model.launches
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Core(
     val core: String?,
     val flight: Int?,
@@ -10,4 +14,4 @@ data class Core(
     val landpad: String?,
     val legs: Boolean?,
     val reused: Boolean?
-)
+) : Parcelable

@@ -1,9 +1,12 @@
 package com.mindera.rocketscience.model.launches
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity
+@Parcelize
 data class Launch(
     val auto_update: Boolean,
     val capsules: List<String>,
@@ -33,4 +36,4 @@ data class Launch(
     val tbd: Boolean,
     val upcoming: Boolean,
     val window: Int?
-)
+) : Parcelable

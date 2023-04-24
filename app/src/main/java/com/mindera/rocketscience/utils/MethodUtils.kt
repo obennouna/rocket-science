@@ -42,6 +42,12 @@ class MethodUtils {
             return format.format(date)
         }
 
+        fun getYear(time: Int): String {
+            val date = Date(time.toLong() * 1000)
+            val format = SimpleDateFormat("yyyy", Locale.ENGLISH)
+            return format.format(date)
+        }
+
         fun formatDateSinceOrFrom(context: Context, time: Int): String {
             val today = LocalDate.now()
             val from = Instant.ofEpochMilli(time.toLong()).atOffset(ZoneOffset.UTC).toLocalDate()

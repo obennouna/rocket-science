@@ -22,10 +22,15 @@
     <!-- Rockets -->
     <string name="rocket_name_and_type">%s / %s</string>
 
-    <!-- AlertDialog Click -->
+    <!-- AlertDialog Click Item -->
     <string name="title_alert_dialog">What do you want to open ?</string>
     <string name="content_alert_dialog">Do you want to open the Wikipedia page, YouTube video or the article ?</string>
     <string name="article_label">Article</string>
     <string name="wikipedia_label">Wikipedia</string>
     <string name="youtube_label">YouTube video</string>
+
+    <!-- Menu Item -->
+    <string name="menu_filter_label">Filter</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 </resources>

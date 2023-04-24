@@ -1,5 +1,9 @@
 package com.mindera.rocketscience.model.launches
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class LaunchLinks(
     val article: String?,
     val flickr: Flickr,
@@ -9,4 +13,4 @@ data class LaunchLinks(
     val webcast: String?,
     val wikipedia: String?,
     val youtube_id: String?
-)
+) : Parcelable
