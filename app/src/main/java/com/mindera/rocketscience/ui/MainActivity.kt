@@ -1,6 +1,9 @@
 package com.mindera.rocketscience.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -14,6 +17,7 @@ import com.mindera.rocketscience.model.rocket.Rocket
 import com.mindera.rocketscience.ui.adapter.LaunchesAdapter
 import com.mindera.rocketscience.ui.viewmodel.RocketScienceViewModel
 import okhttp3.internal.notifyAll
+
 
 class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
 
@@ -78,6 +82,25 @@ class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
     }
 
     override fun onItemClickListener(data: Launch) {
-        // TODO
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder
+            .setTitle(R.string.title_alert_dialog)
+            .setMessage(R.string.content_alert_dialog)
+            .setPositiveButton(R.string.wikipedia_label) { _, _ ->
+                openIntent(data.links.wikipedia)
+            }
+            .setNegativeButton(R.string.article_label) { _, _ ->
+                openIntent(data.links.article)
+            }
+            .setNeutralButton(R.string.youtube_label) { _, _ ->
+                openIntent(data.links.webcast)
+            }
+            .create()
+            .show()
+    }
+
+    private fun openIntent(uri: String?) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+        startActivity(browserIntent)
     }
 }
