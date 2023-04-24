@@ -38,8 +38,11 @@ android {
         viewBinding true
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
+    }
     namespace 'com.mindera.rocketscience'
-
 }
 
 dependencies {
@@ -59,8 +62,27 @@ dependencies {
 
     // Unit testing
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'androidx.test:core:1.5.0'
+    testImplementation 'androidx.test:core-ktx:1.5.0'
+    testImplementation 'androidx.test.ext:junit-ktx:1.1.5'
+
+    //For runBlockingTest, CoroutineDispatcher etc.
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    // Robolectric environment
+    testImplementation 'org.robolectric:robolectric:4.5.1'
+
+    // Optional -- truth
+    testImplementation 'androidx.test.ext:truth:1.5.0'
+    testImplementation 'com.google.truth:truth:1.1.3'
+
+    // Optional -- Mockito framework
+    testImplementation 'org.mockito:mockito-core:3.3.3'
+    testImplementation "io.mockk:mockk:1.9.3"
+
+    // Automated testing
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test:core:1.5.0'
 
     // Network
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
