@@ -24,6 +24,7 @@
     <style name="TextViewContent" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:textSize">@dimen/content_section_size</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginLeft">@dimen/padding_medium</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

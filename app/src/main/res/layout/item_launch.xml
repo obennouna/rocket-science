@@ -9,8 +9,6 @@
         android:id="@+id/launch_mission_image"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:paddingStart="@dimen/padding_medium"
-        android:paddingEnd="@dimen/padding_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -21,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mission_label"
-        app:layout_constraintStart_toEndOf="@+id/launch_mission_image"
+        app:layout_constraintStart_toEndOf="@id/launch_mission_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -29,8 +27,7 @@
         style="@style/TextViewContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/launch_mission_label"
+        app:layout_constraintStart_toEndOf="@id/launch_mission_label"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -39,16 +36,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/date_time_label"
-        app:layout_constraintStart_toEndOf="@+id/launch_mission_image"
-        app:layout_constraintTop_toBottomOf="@+id/launch_mission_label" />
+        app:layout_constraintStart_toEndOf="@id/launch_mission_image"
+        app:layout_constraintTop_toBottomOf="@id/launch_mission_label" />
 
     <TextView
         android:id="@+id/launch_mission_date_content"
         style="@style/TextViewContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/launch_mission_title"
-        app:layout_constraintTop_toBottomOf="@+id/launch_mission_title" />
+        app:layout_constraintStart_toEndOf="@id/launch_mission_date_label"
+        app:layout_constraintTop_toBottomOf="@id/launch_mission_title" />
 
     <TextView
         android:id="@+id/launch_mission_rocket_label"
@@ -56,31 +53,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/rocket_label"
-        app:layout_constraintStart_toEndOf="@+id/launch_mission_image"
-        app:layout_constraintTop_toBottomOf="@+id/launch_mission_date_label" />
+        app:layout_constraintStart_toEndOf="@id/launch_mission_image"
+        app:layout_constraintTop_toBottomOf="@id/launch_mission_date_label" />
 
     <TextView
         android:id="@+id/launch_mission_rocket_content"
         style="@style/TextViewContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/launch_mission_date_content"
-        app:layout_constraintTop_toBottomOf="@+id/launch_mission_date_content" />
+        app:layout_constraintStart_toEndOf="@id/launch_mission_rocket_label"
+        app:layout_constraintTop_toBottomOf="@id/launch_mission_date_content" />
 
     <TextView
         android:id="@+id/launch_mission_days_label"
         style="@style/TextViewContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/launch_mission_image"
-        app:layout_constraintTop_toBottomOf="@+id/launch_mission_rocket_label" />
+        app:layout_constraintStart_toEndOf="@id/launch_mission_image"
+        app:layout_constraintTop_toBottomOf="@id/launch_mission_rocket_label" />
 
     <TextView
         android:id="@+id/launch_mission_days_content"
         style="@style/TextViewContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/launch_mission_rocket_content"
-        app:layout_constraintTop_toBottomOf="@+id/launch_mission_rocket_content" />
+        app:layout_constraintStart_toEndOf="@id/launch_mission_days_label"
+        app:layout_constraintTop_toBottomOf="@id/launch_mission_rocket_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

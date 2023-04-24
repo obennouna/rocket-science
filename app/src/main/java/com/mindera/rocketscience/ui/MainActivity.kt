@@ -13,6 +13,7 @@ import com.mindera.rocketscience.model.launches.Launch
 import com.mindera.rocketscience.model.rocket.Rocket
 import com.mindera.rocketscience.ui.adapter.LaunchesAdapter
 import com.mindera.rocketscience.ui.viewmodel.RocketScienceViewModel
+import okhttp3.internal.notifyAll
 
 class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
 
@@ -63,12 +64,17 @@ class MainActivity : AppCompatActivity(), LaunchesAdapter.OnItemClickListener {
                 )
             )
             launchesAdapter.onItemClickListener(this)
-            launchesAdapter.setData(launches)
+            launchesAdapter.setLaunches(launches)
             binding.launchesItems.adapter = launchesAdapter
         }
     }
 
-    private fun updateRockets(rockets: List<Rocket>?) {
+    private fun updateRockets(rockets: List<Rocket>) {
+        // We need to use the notify withing a synchronized context to avoid an exception
+        synchronized(launchesAdapter) {
+            launchesAdapter.setRockets(rockets)
+            launchesAdapter.notifyAll()
+        }
     }
 
     override fun onItemClickListener(data: Launch) {
