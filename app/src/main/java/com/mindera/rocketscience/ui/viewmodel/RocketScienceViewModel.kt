@@ -32,7 +32,7 @@ class RocketScienceViewModel : ViewModel() {
     fun getCompanyInfo(context: Context) {
         _companyInfo.apply {
             viewModelScope.launch(Dispatchers.Main) {
-                value = context.let { rocketScienceRepository.getCompanyInfo(it) }
+                value = rocketScienceRepository.getCompanyInfo(context)
             }
         }
     }
